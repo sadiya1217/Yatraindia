@@ -1,0 +1,33 @@
+# Java
+target/
+*.class
+
+# Maven
+.mvn/
+
+# IDE
+.idea/
+*.iml
+.classpath
+.project
+.settings/
+
+# VS Code
+.vscode/
+
+# Logs
+*.log
+
+# Environment / secrets
+.env
+.env.*
+!.env.example
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Node
+node_modules/
+dist/
+build/
