@@ -40,7 +40,8 @@ public class SecurityConfig {
             	    .requestMatchers(
             	        HttpMethod.GET,
             	        "/api/destinations/**",
-            	        "/api/hotels/**"
+            	        "/api/hotels/**",
+            	        "/api/cabs/**"
             	    ).permitAll()
             	    .anyRequest().authenticated()
             	)
