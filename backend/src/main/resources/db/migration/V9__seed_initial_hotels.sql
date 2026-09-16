@@ -1,0 +1,71 @@
+INSERT INTO hotels (
+    name,
+    slug,
+    description,
+    address,
+    city,
+    state,
+    country,
+    latitude,
+    longitude,
+    star_rating,
+    contact_phone,
+    contact_email,
+    check_in_time,
+    check_out_time,
+    status
+) VALUES
+
+(
+    'Grand Hyderabad Hotel',
+    'grand-hyderabad-hotel',
+    'A comfortable hotel in Hyderabad suitable for business and leisure travelers.',
+    'Banjara Hills, Hyderabad',
+    'Hyderabad',
+    'Telangana',
+    'India',
+    17.4156,
+    78.4347,
+    4.5,
+    '9876543210',
+    'contact@grandhyderabad.example',
+    '14:00:00',
+    '11:00:00',
+    'ACTIVE'
+),
+
+(
+    'Heritage Palace Hotel',
+    'heritage-palace-hotel',
+    'A heritage-style hotel offering a comfortable stay in Jaipur.',
+    'C-Scheme, Jaipur',
+    'Jaipur',
+    'Rajasthan',
+    'India',
+    26.9124,
+    75.7873,
+    4.0,
+    '9876543211',
+    'contact@heritagepalace.example',
+    '14:00:00',
+    '11:00:00',
+    'ACTIVE'
+),
+
+(
+    'Goa Beach Resort',
+    'goa-beach-resort',
+    'A beach resort designed for travelers exploring Goa.',
+    'Calangute, Goa',
+    'Calangute',
+    'Goa',
+    'India',
+    15.5440,
+    73.7550,
+    4.2,
+    '9876543212',
+    'contact@goabeach.example',
+    '14:00:00',
+    '11:00:00',
+    'ACTIVE'
+);

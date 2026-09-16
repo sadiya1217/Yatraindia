@@ -1,5 +1,5 @@
 package com.yatraindia.config;
-
+import org.springframework.http.HttpMethod;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -31,14 +31,19 @@ public class SecurityConfig {
             .logout(logout -> logout.disable())
 
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers(
-                    "/api/health",
-                    "/api/auth/register",
-                    "/api/auth/login",
-                    "/error"
-                ).permitAll()
-                .anyRequest().authenticated()
-            )
+            	    .requestMatchers(
+            	        "/api/health",
+            	        "/api/auth/register",
+            	        "/api/auth/login",
+            	        "/error"
+            	    ).permitAll()
+            	    .requestMatchers(
+            	        HttpMethod.GET,
+            	        "/api/destinations/**",
+            	        "/api/hotels/**"
+            	    ).permitAll()
+            	    .anyRequest().authenticated()
+            	)
 
             .addFilterBefore(
                 jwtAuthenticationFilter,
