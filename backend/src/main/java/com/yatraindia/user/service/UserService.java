@@ -50,6 +50,9 @@ public class UserService {
         user.setRole("CUSTOMER");
         user.setStatus("ACTIVE");
 
+        // Default language for new users
+        user.setPreferredLanguage("English");
+
         LocalDateTime now = LocalDateTime.now();
 
         user.setCreatedAt(now);
@@ -57,7 +60,6 @@ public class UserService {
 
         return userRepository.save(user);
     }
-
 
     public User login(LoginRequest request) {
 
@@ -83,7 +85,6 @@ public class UserService {
         return user;
     }
 
-
     public User getUserByEmail(String email) {
 
         return userRepository.findByEmail(email)
@@ -91,7 +92,6 @@ public class UserService {
                         new RuntimeException(
                                 "User not found"));
     }
-
 
     public User updateProfile(
             String email,
@@ -123,6 +123,13 @@ public class UserService {
 
             user.setPhone(
                     phone.isBlank() ? null : phone);
+        }
+
+        if (request.getPreferredLanguage() != null
+                && !request.getPreferredLanguage().isBlank()) {
+
+            user.setPreferredLanguage(
+                    request.getPreferredLanguage().trim());
         }
 
         user.setUpdatedAt(LocalDateTime.now());

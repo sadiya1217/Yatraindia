@@ -35,6 +35,9 @@ public class User {
     @Column(nullable = false, length = 30)
     private String status;
 
+    @Column(name = "preferred_language", nullable = false, length = 20)
+    private String preferredLanguage;
+
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
 
@@ -98,6 +101,14 @@ public class User {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getPreferredLanguage() {
+        return preferredLanguage;
+    }
+
+    public void setPreferredLanguage(String preferredLanguage) {
+        this.preferredLanguage = preferredLanguage;
     }
 
     public LocalDateTime getCreatedAt() {
