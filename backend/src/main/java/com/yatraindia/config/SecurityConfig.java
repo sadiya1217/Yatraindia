@@ -38,11 +38,20 @@ public class SecurityConfig {
             	        "/error"
             	    ).permitAll()
             	    .requestMatchers(
-            	        HttpMethod.GET,
-            	        "/api/destinations/**",
-            	        "/api/hotels/**",
-            	        "/api/cabs/**"
-            	    ).permitAll()
+            	    	    HttpMethod.GET,
+            	    	    "/api/destinations/**",
+            	    	    "/api/hotels/**",
+            	    	    "/api/cabs/**",
+            	    	    "/api/bookings/**"
+            	    	).permitAll()
+            	    	.requestMatchers(
+            	    	    HttpMethod.POST,
+            	    	    "/api/bookings"
+            	    	).permitAll()
+            	    	.requestMatchers(
+            	    		    HttpMethod.PATCH,
+            	    		    "/api/bookings/**"
+            	    		).permitAll()
             	    .anyRequest().authenticated()
             	)
 
