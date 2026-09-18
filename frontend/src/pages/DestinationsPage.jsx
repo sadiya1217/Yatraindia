@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import apiClient from "../services/apiClient";
+import { Link } from "react-router-dom";
 
 function DestinationsPage() {
     const [destinations, setDestinations] = useState([]);
@@ -52,9 +53,9 @@ function DestinationsPage() {
                                     {destination.shortDescription}
                                 </p>
 
-                                <button type="button">
-                                    Explore {destination.name}
-                                </button>
+                             <Link to={`/destinations/${destination.id}`}>
+                                  Explore {destination.name}
+                                </Link>  
                             </div>
                         ))}
                     </div>
