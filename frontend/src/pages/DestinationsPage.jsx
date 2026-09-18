@@ -1,10 +1,30 @@
+import { useEffect, useState } from "react";
+import apiClient from "../services/apiClient";
+
 function DestinationsPage() {
+    const [destinations, setDestinations] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState("");
+
+    useEffect(() => {
+        const loadDestinations = async () => {
+            try {
+                const data = await apiClient("/api/destinations");
+                setDestinations(data);
+            } catch (err) {
+                setError("Unable to load destinations.");
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        loadDestinations();
+    }, []);
+
     return (
         <main>
             <section className="destination-header">
-                <p className="section-label">
-                    DISCOVER INDIA
-                </p>
+                <p className="section-label">DISCOVER INDIA</p>
 
                 <h1>Explore destinations</h1>
 
@@ -15,40 +35,30 @@ function DestinationsPage() {
             </section>
 
             <section className="destination-section">
-                <div className="destination-grid">
-                    <div className="destination-card">
-                        <h2>Hyderabad</h2>
-                        <p>
-                            Explore heritage, food, culture and
-                            modern city experiences.
-                        </p>
-                        <button type="button">
-                            Explore Hyderabad
-                        </button>
-                    </div>
+                {loading && <p>Loading destinations...</p>}
 
-                    <div className="destination-card">
-                        <h2>Jaipur</h2>
-                        <p>
-                            Discover forts, palaces, markets and
-                            Rajasthan's rich heritage.
-                        </p>
-                        <button type="button">
-                            Explore Jaipur
-                        </button>
-                    </div>
+                {error && <p>{error}</p>}
 
-                    <div className="destination-card">
-                        <h2>Goa</h2>
-                        <p>
-                            Find beaches, local experiences, food
-                            and places to relax.
-                        </p>
-                        <button type="button">
-                            Explore Goa
-                        </button>
+                {!loading && !error && (
+                    <div className="destination-grid">
+                        {destinations.map((destination) => (
+                            <div
+                                className="destination-card"
+                                key={destination.id}
+                            >
+                                <h2>{destination.name}</h2>
+
+                                <p>
+                                    {destination.shortDescription}
+                                </p>
+
+                                <button type="button">
+                                    Explore {destination.name}
+                                </button>
+                            </div>
+                        ))}
                     </div>
-                </div>
+                )}
             </section>
         </main>
     );

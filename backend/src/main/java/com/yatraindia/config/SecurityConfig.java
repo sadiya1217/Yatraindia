@@ -1,10 +1,14 @@
 package com.yatraindia.config;
-import org.springframework.http.HttpMethod;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import com.yatraindia.auth.security.JwtAuthenticationFilter;
 
@@ -24,6 +28,8 @@ public class SecurityConfig {
         http
             .csrf(csrf -> csrf.disable())
 
+            .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+
             .formLogin(form -> form.disable())
 
             .httpBasic(httpBasic -> httpBasic.disable())
@@ -31,29 +37,33 @@ public class SecurityConfig {
             .logout(logout -> logout.disable())
 
             .authorizeHttpRequests(auth -> auth
-            	    .requestMatchers(
-            	        "/api/health",
-            	        "/api/auth/register",
-            	        "/api/auth/login",
-            	        "/error"
-            	    ).permitAll()
-            	    .requestMatchers(
-            	    	    HttpMethod.GET,
-            	    	    "/api/destinations/**",
-            	    	    "/api/hotels/**",
-            	    	    "/api/cabs/**",
-            	    	    "/api/bookings/**"
-            	    	).permitAll()
-            	    	.requestMatchers(
-            	    	    HttpMethod.POST,
-            	    	    "/api/bookings"
-            	    	).permitAll()
-            	    	.requestMatchers(
-            	    		    HttpMethod.PATCH,
-            	    		    "/api/bookings/**"
-            	    		).permitAll()
-            	    .anyRequest().authenticated()
-            	)
+                .requestMatchers(
+                    "/api/health",
+                    "/api/auth/register",
+                    "/api/auth/login",
+                    "/error"
+                ).permitAll()
+
+                .requestMatchers(
+                    HttpMethod.GET,
+                    "/api/destinations/**",
+                    "/api/hotels/**",
+                    "/api/cabs/**",
+                    "/api/bookings/**"
+                ).permitAll()
+
+                .requestMatchers(
+                    HttpMethod.POST,
+                    "/api/bookings"
+                ).permitAll()
+
+                .requestMatchers(
+                    HttpMethod.PATCH,
+                    "/api/bookings/**"
+                ).permitAll()
+
+                .anyRequest().authenticated()
+            )
 
             .addFilterBefore(
                 jwtAuthenticationFilter,
@@ -61,5 +71,42 @@ public class SecurityConfig {
             );
 
         return http.build();
+    }
+
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+
+        CorsConfiguration configuration = new CorsConfiguration();
+
+        configuration.setAllowedOrigins(
+            java.util.List.of("http://localhost:5173")
+        );
+
+        configuration.setAllowedMethods(
+            java.util.List.of(
+                "GET",
+                "POST",
+                "PUT",
+                "PATCH",
+                "DELETE",
+                "OPTIONS"
+            )
+        );
+
+        configuration.setAllowedHeaders(
+            java.util.List.of("*")
+        );
+
+        configuration.setAllowCredentials(true);
+
+        UrlBasedCorsConfigurationSource source =
+            new UrlBasedCorsConfigurationSource();
+
+        source.registerCorsConfiguration(
+            "/**",
+            configuration
+        );
+
+        return source;
     }
 }
