@@ -37,6 +37,11 @@ public class SecurityConfig {
             .logout(logout -> logout.disable())
 
             .authorizeHttpRequests(auth -> auth
+
+                // Allow browser CORS preflight requests
+                .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+
+                // Public authentication and health endpoints
                 .requestMatchers(
                     "/api/health",
                     "/api/auth/register",
@@ -44,6 +49,7 @@ public class SecurityConfig {
                     "/error"
                 ).permitAll()
 
+                // Public GET APIs
                 .requestMatchers(
                     HttpMethod.GET,
                     "/api/destinations/**",
@@ -53,16 +59,19 @@ public class SecurityConfig {
                     "/api/places/**"
                 ).permitAll()
 
+                // Booking creation
                 .requestMatchers(
                     HttpMethod.POST,
                     "/api/bookings"
                 ).permitAll()
 
+                // Booking status update
                 .requestMatchers(
                     HttpMethod.PATCH,
                     "/api/bookings/**"
                 ).permitAll()
 
+                // Everything else requires authentication
                 .anyRequest().authenticated()
             )
 

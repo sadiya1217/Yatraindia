@@ -429,3 +429,46 @@ footer {
     margin: 0 auto;
     padding: 80px 7%;
 }
+.hotel-search {
+    margin: 12px 0;
+    display: inline-block;
+    margin-right: 12px;
+}
+
+.hotel-search input {
+    width: 100%;
+    max-width: 500px;
+    padding: 12px 16px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+.hotel-card {
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    background: #fff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.hotel-card h2 {
+    margin-top: 0;
+}
+
+.hotel-card a {
+    display: inline-block;
+    margin-top: 10px;
+    text-decoration: none;
+}
+@media (max-width: 768px) {
+    .hotel-search {
+        display: block;
+        margin-right: 0;
+    }
+
+    .hotel-search input {
+        max-width: 100%;
+    }
+}

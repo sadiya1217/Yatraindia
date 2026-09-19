@@ -1,8 +1,10 @@
 import "./App.css";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import HomePage from "./pages/HomePage";
+import HotelDetailsPage from "./pages/HotelDetailsPage";
 import DestinationsPage from "./pages/DestinationsPage";
 import DestinationDetailsPage from "./pages/DestinationDetailsPage";
+import HotelsPage from "./pages/HotelsPage";
 
 function App() {
     return (
@@ -25,6 +27,8 @@ function App() {
 
                 <Routes>
                     <Route path="/" element={<HomePage />} />
+                    <Route path="/hotels" element={<HotelsPage />} />
+                      <Route path="/hotels/:id" element={<HotelDetailsPage />} />
                     <Route
                         path="/destinations"
                         element={<DestinationsPage />}
@@ -33,6 +37,8 @@ function App() {
                         path="/destinations/:id"
                         element={<DestinationDetailsPage />}
                     />
+                  
+                
                 </Routes>
 
                 <footer>
