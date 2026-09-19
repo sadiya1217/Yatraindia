@@ -49,7 +49,8 @@ public class SecurityConfig {
                     "/api/destinations/**",
                     "/api/hotels/**",
                     "/api/cabs/**",
-                    "/api/bookings/**"
+                    "/api/bookings/**",
+                    "/api/places/**"
                 ).permitAll()
 
                 .requestMatchers(

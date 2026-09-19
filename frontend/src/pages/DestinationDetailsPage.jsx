@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import apiClient from "../services/apiClient";
-
+import DestinationMap from "../components/DestinationMap";
 function DestinationDetailsPage() {
     const { id } = useParams();
 
@@ -57,6 +57,11 @@ function DestinationDetailsPage() {
                         {destination.bestTimeToVisit}
                     </p>
                 </div>
+<DestinationMap
+    latitude={destination.latitude}
+    longitude={destination.longitude}
+    name={destination.name}
+/>
             </section>
         </main>
     );
