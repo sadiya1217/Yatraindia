@@ -41,6 +41,14 @@ public class Booking {
 
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
+    @Column(name = "pickup_location", length = 300)
+private String pickupLocation;
+
+@Column(name = "drop_location", length = 300)
+private String dropLocation;
+
+@Column
+private Integer passengers;
 
     public Booking() {
     	this.createdAt = LocalDateTime.now();
@@ -133,4 +141,27 @@ public class Booking {
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
     }
+public String getPickupLocation() {
+    return pickupLocation;
+}
+
+public void setPickupLocation(String pickupLocation) {
+    this.pickupLocation = pickupLocation;
+}
+
+public String getDropLocation() {
+    return dropLocation;
+}
+
+public void setDropLocation(String dropLocation) {
+    this.dropLocation = dropLocation;
+}
+
+public Integer getPassengers() {
+    return passengers;
+}
+
+public void setPassengers(Integer passengers) {
+    this.passengers = passengers;
+}
 }

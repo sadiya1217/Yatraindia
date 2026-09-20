@@ -1,0 +1,4 @@
+ALTER TABLE bookings
+ADD COLUMN pickup_location VARCHAR(300) NULL,
+ADD COLUMN drop_location VARCHAR(300) NULL,
+ADD COLUMN passengers INT NULL;

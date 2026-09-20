@@ -4,7 +4,10 @@ import HomePage from "./pages/HomePage";
 import HotelDetailsPage from "./pages/HotelDetailsPage";
 import DestinationsPage from "./pages/DestinationsPage";
 import DestinationDetailsPage from "./pages/DestinationDetailsPage";
+import CabBookingPage from "./pages/CabBookingPage";
 import HotelsPage from "./pages/HotelsPage";
+import CabsPage from "./pages/CabsPage";
+import CabDetailsPage from "./pages/CabDetailsPage";
 
 function App() {
     return (
@@ -29,6 +32,12 @@ function App() {
                     <Route path="/" element={<HomePage />} />
                     <Route path="/hotels" element={<HotelsPage />} />
                       <Route path="/hotels/:id" element={<HotelDetailsPage />} />
+                      <Route path="/cabs" element={<CabsPage />} />
+                      <Route path="/cabs/:id" element={<CabDetailsPage />} />
+                      <Route
+    path="/cab-booking/:id"
+    element={<CabBookingPage />}
+/>
                     <Route
                         path="/destinations"
                         element={<DestinationsPage />}
