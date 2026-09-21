@@ -5,6 +5,7 @@ import com.yatraindia.booking.service.BookingService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -47,6 +48,16 @@ public class BookingController {
         return ResponseEntity.ok(
                 bookingService.getBookingsByType(bookingType));
     }
+    @GetMapping("/service/{serviceId}")
+public ResponseEntity<List<Booking>> getBookingsByService(
+        @PathVariable Long serviceId,
+        @RequestParam String bookingType) {
+
+    return ResponseEntity.ok(
+            bookingService.getBookingsByService(
+                    serviceId,
+                    bookingType));
+}
 
     @GetMapping("/status/{status}")
     public ResponseEntity<List<Booking>> getBookingsByStatus(

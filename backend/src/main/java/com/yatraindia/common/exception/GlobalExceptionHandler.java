@@ -9,6 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import com.yatraindia.booking.exception.BookingValidationException;
+
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
@@ -27,6 +29,24 @@ public class GlobalExceptionHandler {
 
         return ResponseEntity
                 .status(HttpStatus.NOT_FOUND)
+                .body(error);
+    }
+
+    @ExceptionHandler(BookingValidationException.class)
+    public ResponseEntity<ApiError> handleBookingValidation(
+            BookingValidationException exception,
+            HttpServletRequest request) {
+
+        ApiError error = new ApiError(
+                LocalDateTime.now(),
+                HttpStatus.BAD_REQUEST.value(),
+                "BAD_REQUEST",
+                exception.getMessage(),
+                request.getRequestURI()
+        );
+
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
                 .body(error);
     }
 
