@@ -49,6 +49,9 @@ public class Hotel {
     @Column(name = "star_rating", precision = 2, scale = 1)
     private BigDecimal starRating;
 
+    @Column(name = "nightly_rate", precision = 10, scale = 2)
+     private BigDecimal nightlyRate;
+
     @Column(name = "contact_phone", length = 20)
     private String contactPhone;
 
@@ -160,6 +163,14 @@ public class Hotel {
     public void setStarRating(BigDecimal starRating) {
         this.starRating = starRating;
     }
+    public BigDecimal getNightlyRate() {
+        return nightlyRate;
+    }
+
+    public void setNightlyRate(BigDecimal nightlyRate) {
+       this.nightlyRate = nightlyRate;
+    }
+
 
     public String getContactPhone() {
         return contactPhone;

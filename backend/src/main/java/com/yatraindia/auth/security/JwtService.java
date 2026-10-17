@@ -60,7 +60,7 @@ public class JwtService {
         }
     }
 
-    public Claims getClaimsForAuthentication(String token) { {
+    public Claims getClaimsForAuthentication(String token) {
 
         return Jwts.parser()
                 .verifyWith((javax.crypto.SecretKey) signingKey)
@@ -68,5 +68,4 @@ public class JwtService {
                 .parseSignedClaims(token)
                 .getPayload();
     }
-}
 }

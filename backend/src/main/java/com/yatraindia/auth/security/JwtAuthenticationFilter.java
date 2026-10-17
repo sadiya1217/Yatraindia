@@ -1,6 +1,8 @@
 package com.yatraindia.auth.security;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.Map;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -48,10 +50,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                     && SecurityContextHolder.getContext()
                             .getAuthentication() == null) {
 
-                Claims claims = jwtService.getClaimsForAuthentication(token);
+                Claims claims =
+                        jwtService.getClaimsForAuthentication(token);
 
                 String email = claims.getSubject();
                 String role = claims.get("role", String.class);
+                Long userId = claims.get("userId", Long.class);
 
                 SimpleGrantedAuthority authority =
                         new SimpleGrantedAuthority("ROLE_" + role);
@@ -60,8 +64,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                         new UsernamePasswordAuthenticationToken(
                                 email,
                                 null,
-                                java.util.List.of(authority)
+                                List.of(authority)
                         );
+
+                authentication.setDetails(
+                        Map.of("userId", userId)
+                );
 
                 SecurityContextHolder.getContext()
                         .setAuthentication(authentication);

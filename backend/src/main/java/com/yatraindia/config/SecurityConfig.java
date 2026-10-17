@@ -1,4 +1,7 @@
+
 package com.yatraindia.config;
+
+import java.util.List;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -27,95 +30,93 @@ public class SecurityConfig {
 
         http
             .csrf(csrf -> csrf.disable())
-
             .cors(cors -> cors.configurationSource(corsConfigurationSource()))
-
             .formLogin(form -> form.disable())
-
             .httpBasic(httpBasic -> httpBasic.disable())
-
             .logout(logout -> logout.disable())
+       .authorizeHttpRequests(auth -> auth
 
-            .authorizeHttpRequests(auth -> auth
+    // Allow browser CORS preflight requests
+    .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
 
-                // Allow browser CORS preflight requests
-                .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+    // Public authentication and health endpoints
+    .requestMatchers(
+        "/api/health",
+        "/api/auth/register",
+        "/api/auth/login",
+        "/error"
+    ).permitAll()
 
-                // Public authentication and health endpoints
-                .requestMatchers(
-                    "/api/health",
-                    "/api/auth/register",
-                    "/api/auth/login",
-                    "/error"
-                ).permitAll()
+    // Public destination and service catalog
+    .requestMatchers(
+        HttpMethod.GET,
+        "/api/destinations/**",
+        "/api/hotels/**",
+        "/api/cabs/**",
+        "/api/places/**"
+    ).permitAll()
 
-                // Public GET APIs
-                .requestMatchers(
-                    HttpMethod.GET,
-                    "/api/destinations/**",
-                    "/api/hotels/**",
-                    "/api/cabs/**",
-                    "/api/bookings/**",
-                    "/api/places/**"
-                ).permitAll()
+    // Customers can access only their own bookings here
+    .requestMatchers(
+        HttpMethod.GET,
+        "/api/bookings/me"
+    ).authenticated()
 
-                // Booking creation
-                .requestMatchers(
-                    HttpMethod.POST,
-                    "/api/bookings"
-                ).permitAll()
+    // Other booking reads are administrator-only
+    .requestMatchers(
+        HttpMethod.GET,
+        "/api/bookings/**"
+    ).hasRole("ADMIN")
 
-                // Booking status update
-                .requestMatchers(
-                    HttpMethod.PATCH,
-                    "/api/bookings/**"
-                ).permitAll()
+    // Booking creation requires authentication
+    .requestMatchers(
+        HttpMethod.POST,
+        "/api/bookings"
+    ).authenticated()
 
-                // Everything else requires authentication
-                .anyRequest().authenticated()
-            )
+    // Booking status changes require an administrator
+    .requestMatchers(
+        HttpMethod.PATCH,
+        "/api/bookings/**"
+    ).hasRole("ADMIN")
 
+    // Travel history requires authentication
+    .requestMatchers(
+        HttpMethod.GET,
+        "/api/history/**"
+    ).authenticated()
+
+    // Require authentication for all other requests
+    .anyRequest().authenticated()
+)
             .addFilterBefore(
                 jwtAuthenticationFilter,
                 UsernamePasswordAuthenticationFilter.class
             );
+
 
         return http.build();
     }
 
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
-
         CorsConfiguration configuration = new CorsConfiguration();
 
         configuration.setAllowedOrigins(
-            java.util.List.of("http://localhost:5173")
+            List.of("http://localhost:5173")
         );
 
         configuration.setAllowedMethods(
-            java.util.List.of(
-                "GET",
-                "POST",
-                "PUT",
-                "PATCH",
-                "DELETE",
-                "OPTIONS"
-            )
+            List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS")
         );
 
-        configuration.setAllowedHeaders(
-            java.util.List.of("*")
-        );
-
+        configuration.setAllowedHeaders(List.of("*"));
         configuration.setAllowCredentials(true);
 
         UrlBasedCorsConfigurationSource source =
             new UrlBasedCorsConfigurationSource();
 
-        source.registerCorsConfiguration(
-            "/**",
-            configuration
-        );
+        source.registerCorsConfiguration("/**", configuration);
 
         return source;
     }

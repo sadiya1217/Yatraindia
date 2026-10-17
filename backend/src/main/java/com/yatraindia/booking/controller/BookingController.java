@@ -2,9 +2,12 @@ package com.yatraindia.booking.controller;
 
 import com.yatraindia.booking.entity.Booking;
 import com.yatraindia.booking.service.BookingService;
+import com.yatraindia.booking.entity.Booking;
+import com.yatraindia.booking.service.BookingService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import com.yatraindia.auth.security.AuthenticatedUserService;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
@@ -14,10 +17,14 @@ import java.util.List;
 public class BookingController {
 
     private final BookingService bookingService;
+    private final AuthenticatedUserService authenticatedUserService;
+public BookingController(
+        BookingService bookingService,
+        AuthenticatedUserService authenticatedUserService) {
 
-    public BookingController(BookingService bookingService) {
-        this.bookingService = bookingService;
-    }
+    this.bookingService = bookingService;
+    this.authenticatedUserService = authenticatedUserService;
+}
 
     @GetMapping
     public ResponseEntity<List<Booking>> getAllBookings() {
@@ -65,6 +72,14 @@ public ResponseEntity<List<Booking>> getBookingsByService(
         return ResponseEntity.ok(
                 bookingService.getBookingsByStatus(status));
     }
+    @GetMapping("/me")
+public ResponseEntity<List<Booking>> getMyBookings() {
+
+    Long userId = authenticatedUserService.getCurrentUserId();
+
+    return ResponseEntity.ok(
+            bookingService.getBookingsByUser(userId));
+}
 
     @PostMapping
     public ResponseEntity<Booking> createBooking(

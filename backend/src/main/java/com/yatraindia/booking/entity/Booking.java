@@ -33,6 +33,12 @@ public class Booking {
     @Column(name = "total_amount", precision = 12, scale = 2)
     private BigDecimal totalAmount;
 
+    @Column(name = "distance_km", precision = 10, scale = 2)
+      private BigDecimal distanceKm;
+
+    @Column(name = "duration_minutes")
+      private Integer durationMinutes;
+
     @Column(name = "status", nullable = false, length = 20)
     private String status;
 
@@ -117,6 +123,23 @@ private Integer passengers;
     public void setTotalAmount(BigDecimal totalAmount) {
         this.totalAmount = totalAmount;
     }
+
+    public BigDecimal getDistanceKm() {
+    return distanceKm;
+}
+
+public void setDistanceKm(BigDecimal distanceKm) {
+    this.distanceKm = distanceKm;
+}
+
+public Integer getDurationMinutes() {
+    return durationMinutes;
+}
+
+public void setDurationMinutes(Integer durationMinutes) {
+    this.durationMinutes = durationMinutes;
+}
+
 
     public String getStatus() {
         return status;

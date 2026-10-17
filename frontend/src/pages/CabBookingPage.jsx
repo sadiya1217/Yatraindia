@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 import apiClient from "../services/apiClient";
 import "./CabBookingPage.css";
 
 function CabBookingPage() {
     const { id } = useParams();
     const navigate = useNavigate();
+    const { user } = useAuth();
 
     const [cab, setCab] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -56,24 +58,20 @@ function CabBookingPage() {
             const checkIn =
                 `${formData.travelDate}T${formData.pickupTime}:00`;
 
-            const bookingData = {
-                bookingReference,
-                userId: 1,
-                bookingType: "CAB",
-                serviceId: Number(id),
-                checkIn,
-                checkOut: null,
-                totalAmount: Number(cab.baseFare),
-                status: "CONFIRMED",
-                pickupLocation: formData.pickupLocation,
-                dropLocation: formData.dropLocation,
-                passengers: Number(formData.passengers),
-            };
-
-            await apiClient("/api/bookings", {
+                        await apiClient("/api/bookings", {
                 method: "POST",
                 body: JSON.stringify(bookingData),
             });
+const bookingData = {
+    bookingReference,
+    bookingType: "CAB",
+    serviceId: Number(id),
+    checkIn,
+    checkOut: null,
+    pickupLocation: formData.pickupLocation,
+    dropLocation: formData.dropLocation,
+    passengers: Number(formData.passengers),
+};
 
             setMessage(
                 `Cab booked successfully. Booking reference: ${bookingReference}`

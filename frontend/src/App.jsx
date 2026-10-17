@@ -8,6 +8,8 @@ import CabBookingPage from "./pages/CabBookingPage";
 import HotelsPage from "./pages/HotelsPage";
 import CabsPage from "./pages/CabsPage";
 import CabDetailsPage from "./pages/CabDetailsPage";
+import MyTripsPage from "./pages/MyTripsPage";
+import LoginPage from "./pages/LoginPage";
 
 function App() {
     return (
@@ -21,6 +23,7 @@ function App() {
                         <a href="#plan">Plan</a>
                         <a href="#book">Book</a>
                         <a href="#assist">Travel Assist</a>
+                        <Link to="/my-trips">My Trips</Link>
                     </nav>
 
                     <button className="login-btn" type="button">
@@ -33,7 +36,9 @@ function App() {
                     <Route path="/hotels" element={<HotelsPage />} />
                       <Route path="/hotels/:id" element={<HotelDetailsPage />} />
                       <Route path="/cabs" element={<CabsPage />} />
+                      <Route path="/my-trips" element={<MyTripsPage />} />
                       <Route path="/cabs/:id" element={<CabDetailsPage />} />
+                      <Route path="/login" element={<LoginPage />} />
                       <Route
     path="/cab-booking/:id"
     element={<CabBookingPage />}
