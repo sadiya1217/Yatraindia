@@ -42,11 +42,12 @@ public class SecurityConfig {
     // Public authentication and health endpoints
     .requestMatchers(
         "/api/health",
+        "/actuator/health",
+        "/actuator/health/**",
         "/api/auth/register",
         "/api/auth/login",
         "/error"
     ).permitAll()
-
     // Public destination and service catalog
     .requestMatchers(
         HttpMethod.GET,

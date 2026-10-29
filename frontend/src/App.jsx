@@ -26,23 +26,23 @@ function App() {
                         <Link to="/my-trips">My Trips</Link>
                     </nav>
 
-                    <button className="login-btn" type="button">
+                    <Link to="/login" className="login-btn">
                         Login
-                    </button>
+                    </Link>
                 </header>
 
                 <Routes>
                     <Route path="/" element={<HomePage />} />
                     <Route path="/hotels" element={<HotelsPage />} />
-                      <Route path="/hotels/:id" element={<HotelDetailsPage />} />
-                      <Route path="/cabs" element={<CabsPage />} />
-                      <Route path="/my-trips" element={<MyTripsPage />} />
-                      <Route path="/cabs/:id" element={<CabDetailsPage />} />
-                      <Route path="/login" element={<LoginPage />} />
-                      <Route
-    path="/cab-booking/:id"
-    element={<CabBookingPage />}
-/>
+                    <Route path="/hotels/:id" element={<HotelDetailsPage />} />
+                    <Route path="/cabs" element={<CabsPage />} />
+                    <Route path="/my-trips" element={<MyTripsPage />} />
+                    <Route path="/cabs/:id" element={<CabDetailsPage />} />
+                    <Route path="/login" element={<LoginPage />} />
+                    <Route
+                        path="/cab-booking/:id"
+                        element={<CabBookingPage />}
+                    />
                     <Route
                         path="/destinations"
                         element={<DestinationsPage />}
@@ -51,8 +51,7 @@ function App() {
                         path="/destinations/:id"
                         element={<DestinationDetailsPage />}
                     />
-                  
-                
+
                 </Routes>
 
                 <footer>
